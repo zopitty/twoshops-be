@@ -34,16 +34,15 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 		shops[shop] = outlets
 	}
 
-	// Find the closest pair
-	allPairs := core.CalculateDistances(shops)
+	distanceRanges := []float64{100, 500, 1000} // meters
 
-	// Responsd with the closest pair
-	maxDistanceKm := req.MaxDistance / 1000.0
-	filteredPairs := core.FilterByProximity(allPairs, maxDistanceKm)
+	// Find clusters and group them by distance
+	groupedClusters := core.FindClustersByDistance(shops, distanceRanges, req.MaxDistance)
 
-	// Extract unique outlets for each shop
-	uniqueOutlets := core.ExtractUniqueOutlets(filteredPairs)
+	// Debug output
+	fmt.Println("Final grouped clusters:", groupedClusters)
 
+	// Respond with grouped clusters
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(uniqueOutlets)
+	json.NewEncoder(w).Encode(groupedClusters)
 }
