@@ -12,6 +12,8 @@ import (
 )
 
 func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
+
+	// shops: and max_distance:
 	var req models.ShopRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -24,8 +26,9 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("searching for shops:", req.Shops)
 
 	for _, shop := range req.Shops {
+		fmt.Println("fetching shop: ", shop)
 		outlets, err := google.FetchOutlets(apiKey, shop)
-		fmt.Println("outlets: \n", outlets)
+		fmt.Println("fetched outlets: ", outlets)
 		if err != nil {
 			http.Error(w, "Failed to fetch outlets", http.StatusInternalServerError)
 			fmt.Println(err)
@@ -34,12 +37,14 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 		shops[shop] = outlets
 	}
 
-	distanceRanges := []float64{100, 500, 1000} // meters
+	// fixed distance range
+	// within 100, within 500, within 1000 of each other
+	distanceRanges := []float64{100, 250, 500, 750, 1000} // meters
 
 	// Find clusters and group them by distance
 	groupedClusters := core.FindClustersByDistance(shops, distanceRanges, req.MaxDistance)
 
-	// Debug output
+	// debug
 	fmt.Println("Final grouped clusters:", groupedClusters)
 
 	// Respond with grouped clusters
