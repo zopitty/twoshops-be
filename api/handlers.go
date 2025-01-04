@@ -49,5 +49,7 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 
 	// Respond with grouped clusters
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(groupedClusters)
+	if err := json.NewEncoder(w).Encode(groupedClusters); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
 }
