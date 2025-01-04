@@ -36,8 +36,18 @@ jobs:
       - name: "Use gcloud CLI"
         run: "gcloud info"
 
+      - name: Verify Build Context
+        run: |
+          pwd
+          ls -l
+
       - name: Build Docker Image and Push to Google Artifact Registry
         run: "gcloud builds submit --tag asia-southeast1-docker.pkg.dev/twoshops/twoshops-ar-repo/twoshops-be:latest ."
+
+      - name: Verify Build Context
+        run: |
+          pwd
+          ls -l
 
       - name: Deploy to Cloud Run
         run: gcloud run deploy twoshops --image asia-southeast1-docker.pkg.dev/twoshops/twoshops-ar-repo/twoshops-be:latest --region asia-southeast1 --allow-unauthenticated --project twoshops --max-instances=1
