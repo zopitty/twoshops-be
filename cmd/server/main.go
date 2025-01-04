@@ -12,6 +12,7 @@ import (
 
 func main() {
 	fmt.Println("Hello, World!")
+	fmt.Println("twoshops-be ready..")
 	// load config
 	config.LoadConfig()
 
