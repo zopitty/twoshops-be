@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/zopitty/twoshops-be/api"
 	"github.com/zopitty/twoshops-be/config"
@@ -32,8 +33,9 @@ func main() {
 
 	// Create the HTTP server
 	server := &http.Server{
-		Handler: corsEnabledMux,
-		Addr:    ":" + port,
+		Handler:           corsEnabledMux,
+		Addr:              ":" + port,
+		ReadHeaderTimeout: 10 * time.Second, // set timeout
 	}
 
 	// start srv
