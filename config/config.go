@@ -19,7 +19,7 @@ func GetGoogleAPIKey() string {
 	if key == "" {
 		log.Fatal("GOOGLE_API_KEY not set")
 	}
-	fmt.Println("api key loaded:", key)
+	fmt.Println("api key loaded")
 	return key
 }
 

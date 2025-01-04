@@ -2,7 +2,6 @@ package google
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/zopitty/twoshops-be/internal/models"
@@ -29,7 +28,7 @@ func FetchOutlets(apiKey, shopName string) ([]models.Outlet, error) {
 			Query:    shopName + " Singapore",
 			Radius:   22000,
 		}
-		fmt.Println(req)
+		// fmt.Println(req)
 
 		if nextPageToken != "" {
 			req.PageToken = nextPageToken

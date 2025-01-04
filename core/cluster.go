@@ -12,7 +12,7 @@ func FindClustersByDistance(
 	maxDistance float64, // user input
 ) map[string][]map[string]interface{} {
 
-	fmt.Println("outlets:", shops)
+	// fmt.Println("outlets:", shops)
 
 	results := make(map[string][]map[string]interface{})
 
@@ -69,12 +69,12 @@ func generateCombinationHelper(
 ) {
 	// Base case: all shops have been processed
 	if index == len(shopNames) {
-		fmt.Println("BASE CASE:")
+		// fmt.Println("BASE CASE:")
 		combination := make(map[string]interface{})
 		for key, value := range currentCombination {
 			combination[key] = value
 		}
-		fmt.Println("Generated combination:", combination) // debug
+		// fmt.Println("Generated combination:", combination) // debug
 		*combinations = append(*combinations, combination)
 		return
 	}
@@ -83,8 +83,8 @@ func generateCombinationHelper(
 	shopName := shopNames[index]
 	for _, outlet := range shops[shopName] {
 		currentCombination[shopName] = outlet
-		fmt.Printf("currentIndex: %v \n", index)
-		fmt.Printf("currentCombination: %v \n", currentCombination)
+		// fmt.Printf("currentIndex: %v \n", index)
+		// fmt.Printf("currentCombination: %v \n", currentCombination)
 		generateCombinationHelper(shops, shopNames, index+1, currentCombination, combinations)
 	}
 }

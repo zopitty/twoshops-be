@@ -23,12 +23,12 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 	apiKey := config.GetGoogleAPIKey()
 	shops := make(map[string][]models.Outlet)
 
-	fmt.Println("searching for shops:", req.Shops)
+	// fmt.Println("searching for shops:", req.Shops)
 
 	for _, shop := range req.Shops {
-		fmt.Println("fetching shop: ", shop)
+		// fmt.Println("fetching shop: ", shop)
 		outlets, err := google.FetchOutlets(apiKey, shop)
-		fmt.Println("fetched outlets: ", outlets)
+		// fmt.Println("fetched outlets: ", outlets)
 		if err != nil {
 			http.Error(w, "Failed to fetch outlets", http.StatusInternalServerError)
 			fmt.Println(err)
@@ -45,7 +45,7 @@ func HandleFindClosest(w http.ResponseWriter, r *http.Request) {
 	groupedClusters := core.FindClustersByDistance(shops, distanceRanges, req.MaxDistance)
 
 	// debug
-	fmt.Println("Final grouped clusters:", groupedClusters)
+	// fmt.Println("Final grouped clusters:", groupedClusters)
 
 	// Respond with grouped clusters
 	w.Header().Set("Content-Type", "application/json")
